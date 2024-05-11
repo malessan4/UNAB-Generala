@@ -1,15 +1,15 @@
-#Importo random para que el dado de numero al azar
 import random
 
-#Creo el constructor de Dado y su metodo
+
 class Dado:
+#para que el dado ya inicialice con un numero random
     def __init__(self):
         self.valor = random.randint(1, 6)
-
+#metodo de tirar dado con valor random
     def tirar(self):
         self.valor = random.randint(1, 6)
 
-#
+
 class Jugador:
     def __init__(self, nombre):
         self.nombre = nombre
@@ -27,16 +27,24 @@ class Jugador:
                     dados[i-1].tirar()
                 print(f"TIRADA ACTUAL DE {self.nombre}: {[dado.valor for dado in dados]}")
 
-        conteo, regla = self.contar_repetidos([dado.valor for dado in dados])
+        conteo, regla = JuegoPuntaje.contar_repetidos([dado.valor for dado in dados])
         print(f"Resultado final de {self.nombre}: {[dado.valor for dado in dados]}")
         print(f"Regla de puntuación: {regla}")
 
-        puntaje = self.calcular_puntaje(conteo, regla)
+        puntaje = JuegoPuntaje.calcular_puntaje(conteo, regla)
         self.puntaje_final = puntaje
         print(f"Puntaje de {self.nombre}: {puntaje}")
 
-
-    def contar_repetidos(self, tirada):
+#JuegoPuntaje para manejar la lógica de puntuación
+class JuegoPuntaje:
+    def verificar_escalera(self, tirada):
+        tirada_ordenada = sorted(tirada)
+        for i in range(len(tirada_ordenada) - 1):
+            if tirada_ordenada[i] != tirada_ordenada[i + 1] - 1:
+                return False
+        return True
+    
+    def contar_repetidos(tirada):
         conteo = {}
         for valor in tirada:
             conteo[valor] = conteo.get(valor, 0) + 1
@@ -56,12 +64,17 @@ class Jugador:
                 regla = "DOS PARES"
             else:
                 regla = "PAR"
+        
+        elif self.verificar_escalera(tirada):
+            regla = "ESCALERA"
+        
         else:
             regla = "NINGUNA"
 
         return conteo, regla
 
-    def calcular_puntaje(self, conteo, regla):
+
+    def calcular_puntaje(conteo, regla):
         puntaje = 0
         if regla == "GENERALA":
             puntaje = 50
@@ -69,6 +82,8 @@ class Jugador:
             puntaje = 40
         elif regla == "FULL":
             puntaje = 30
+        elif regla == "ESCALERA":
+            puntaje = 20
         elif regla == "TRIO":
             puntaje = 10
         elif regla == "DOS PARES":
@@ -77,6 +92,8 @@ class Jugador:
             puntaje = 1
 
         return puntaje
+
+
 
 def jugar_generala():
     cantidad_jugadores = int(input('¿Cuántos jugadores son? '))
@@ -102,18 +119,17 @@ def jugar_generala():
         for i, (nombre, puntaje) in enumerate(tabla_posiciones, start=1):
             print(f"{i}. {nombre}: {puntaje} puntos")
 
-        ganador = None
         if len(tabla_posiciones) > 1:
             ganador = tabla_posiciones[0][0]
             empate = all(puntaje == tabla_posiciones[0][1] for _, puntaje in tabla_posiciones)
             if empate:
                 print("¡Empate entre todos los jugadores!")
-            elif not empate:
+            else:
                 print(f"FELICIDADES {ganador} HAS GANADO!")
         else:
-            print(f"FELICIDADES {ganador} HAS GANADO!")
+            print(f"FELICIDADES HAS GANADO!")
+
     else:
         print("Lo siento, este juego solo admite de 1 a 5 jugadores.")
-
 
 jugar_generala()
