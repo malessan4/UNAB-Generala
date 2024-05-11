@@ -2,10 +2,10 @@ import random
 
 
 class Dado:
-#para que el dado ya inicialice con un numero random
+# para que el dado ya inicialice con un numero random
     def __init__(self):
         self.valor = random.randint(1, 6)
-#metodo de tirar dado con valor random
+# metodo de tirar dado con valor random
     def tirar(self):
         self.valor = random.randint(1, 6)
 
@@ -19,14 +19,16 @@ class Jugador:
         dados = [Dado() for _ in range(5)]
         print(f"TIRADA ACTUAL DE {self.nombre}: {[dado.valor for dado in dados]}")
 
+# Para que siempre me diga que combinacion tengo y que puntaje obtengo
         conteo, regla = JuegoPuntaje.contar_repetidos([dado.valor for dado in dados])
         puntaje = JuegoPuntaje.calcular_puntaje(conteo, regla)
         print(f"Combinación actual de {self.nombre}: {regla}")
         print(f"Puntaje de {self.nombre} con esta combinación: {puntaje}")
         
 
+# Logica para los turnos para cada jugador
         
-        for _ in range(2):
+        for turnos in range(3):
             dados_a_cambiar = input(f"{self.nombre}, ¿qué dados quieres cambiar? (escribe los numeros de los dados a cambiar seguidos de espacio, o 'nada' para no cambiar nada): Por ejemplo: Mi tirada dio esto (5, 3, 1, 3, 5) y quiero cambiar el 3 el 1 el 3, escribo (2 3 4) ")
             if dados_a_cambiar.lower() != 'nada':
                 dados_a_cambiar = list(map(int, dados_a_cambiar.split()))
@@ -38,7 +40,8 @@ class Jugador:
                 puntaje = JuegoPuntaje.calcular_puntaje(conteo, regla)
                 print(f"Combinación actual de {self.nombre}: {regla}")
                 print(f"Puntaje de {self.nombre} con esta combinación: {puntaje}")
-                
+
+# Como obtengo el resultado final                
         conteo, regla = JuegoPuntaje.contar_repetidos([dado.valor for dado in dados])
         print(f"Resultado final de {self.nombre}: {[dado.valor for dado in dados]}")
         print(f"Regla de puntuación: {regla}")
@@ -47,7 +50,7 @@ class Jugador:
         self.puntaje_final += puntaje
         print(f"Puntaje total de {self.nombre}: {self.puntaje_final}")
 
-#JuegoPuntaje para manejar la lógica de puntuación
+# Para manejar la lógica de puntuación
 class JuegoPuntaje:
 
     def contar_repetidos(tirada):
