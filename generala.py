@@ -29,7 +29,7 @@ class Jugador:
 # Logica para los turnos para cada jugador
         
         for turnos in range(3):
-            dados_a_cambiar = input(f"{self.nombre}, ¿qué dados quieres cambiar? (escribe los numeros de los dados a cambiar seguidos de espacio, o 'nada' para no cambiar nada): Por ejemplo: Mi tirada dio esto (5, 3, 1, 3, 5) y quiero cambiar el 3 el 1 el 3, escribo (2 3 4) ")
+            dados_a_cambiar = input(f"{self.nombre}, ¿qué dados quieres cambiar? ")
             if dados_a_cambiar.lower() != 'nada':
                 dados_a_cambiar = list(map(int, dados_a_cambiar.split()))
                 for i in dados_a_cambiar:
@@ -75,7 +75,14 @@ class JuegoPuntaje:
                 regla = "PAR"
         else:
             regla = "NINGUNA"
-
+            
+        tirada_ordenada = sorted(set(tirada))
+        if len(tirada_ordenada) == 5:
+            if tirada_ordenada == [1, 2, 3, 4, 5]:
+                regla = "ESCALERA MENOR"
+            elif tirada_ordenada == [2, 3, 4, 5, 6]:
+                regla = "ESCALERA MAYOR"
+                
         return conteo, regla
 
 
@@ -101,6 +108,7 @@ class JuegoPuntaje:
 
 
 def jugar_generala():
+    print("¡Bienvenido a La Generala, y que se diviertan!")
     cantidad_jugadores = int(input('¿Cuántos jugadores son? '))
     if 0 < cantidad_jugadores <= 5:
         jugadores = []
@@ -109,7 +117,8 @@ def jugar_generala():
             jugador = Jugador(nombre)
             jugadores.append(jugador)
 
-        print('¡Comencemos el juego de Generala!')
+        print('¡Comencemos el juego de La Generala!')
+        print("escribe los numeros de los dados a cambiar seguidos de espacio, o 'nada' para no cambiar nada): Por ejemplo: Mi tirada dio esto (5, 3, 1, 3, 5) y quiero cambiar el 3 el 1 el 3, escribo (2 3 4) ")
 
         for jugador in jugadores:
             jugador.jugar_turno()
