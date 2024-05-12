@@ -26,5 +26,5 @@ Par ( 1 punto ) Un par de dados del mismo valor
 
 **Programado por Matías Daniel Alessandrello**
 
-**Ejercicio realizado en la UNAB - Algoritmo y Estructura de Datos (2024 - 1er cuatri)**
+**Ejercicio realizado en la UNAB - Algoritmo y Estructura de Datos  - (comision 6) - (2024 - 1er cuatri)**
 
