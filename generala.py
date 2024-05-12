@@ -15,6 +15,7 @@ class Jugador:
         self.nombre = nombre
         self.puntaje_final = 0
 
+# Metodo principal para jugar
     def jugar_turno(self):
         dados = [Dado() for _ in range(5)]
         print(f"TIRADA ACTUAL DE {self.nombre}: {[dado.valor for dado in dados]}")
@@ -53,11 +54,13 @@ class Jugador:
 # Para manejar la lógica de puntuación
 class JuegoPuntaje:
 
+# Metodo para las tiradas de dados y contador de turnos
     def contar_repetidos(tirada):
         conteo = {}
         for valor in tirada:
             conteo[valor] = conteo.get(valor, 0) + 1
 
+# Configuracion de los valores
         max_count = max(conteo.values())
         if max_count == 5:
             regla = "GENERALA"
@@ -85,7 +88,7 @@ class JuegoPuntaje:
                 
         return conteo, regla
 
-
+# Devuelve el puntaje de cada combinacion
     def calcular_puntaje(conteo, regla):
         puntaje = 0
         if regla == "GENERALA":
@@ -106,7 +109,8 @@ class JuegoPuntaje:
         return puntaje
 
 
-
+# Metodo principal del juego
+# Para ingresar jugadores y nombres
 def jugar_generala():
     print("¡Bienvenido a La Generala, y que se diviertan!")
     cantidad_jugadores = int(input('¿Cuántos jugadores son? '))
@@ -120,15 +124,17 @@ def jugar_generala():
         print('¡Comencemos el juego de La Generala!')
         print("escribe los numeros de los dados a cambiar seguidos de espacio, o 'nada' para no cambiar nada): Por ejemplo: Mi tirada dio esto (5, 3, 1, 3, 5) y quiero cambiar el 3 el 1 el 3, escribo (2 3 4) ")
 
+# Ejecuto el metodo de la clase Jugador
         for jugador in jugadores:
             jugador.jugar_turno()
 
-        # Calcular puntaje final de cada jugador
+# Calcular puntaje final de cada jugador
         puntajes_finales = {jugador.nombre: jugador.puntaje_final for jugador in jugadores}
 
-        # Ordenar la tabla de posiciones de mayor a menor puntaje
+# Ordenar la tabla de posiciones de mayor a menor puntaje
         tabla_posiciones = sorted(puntajes_finales.items(), key=lambda x: x[1], reverse=True)
 
+# Imprimo tabla de posiciones con felicitaciones finales
         print("\nTabla de Posiciones:")
         for i, (nombre, puntaje) in enumerate(tabla_posiciones, start=1):
             print(f"{i}. {nombre}: {puntaje} puntos")
@@ -142,7 +148,8 @@ def jugar_generala():
                 print("¡Empate entre algunos jugadores!")
         else:
             print(f"FELICIDADES {tabla_posiciones[0][0]} HAS GANADO!")
-
+            
+# Por si ponen mas de 5 jugadores
     else:
         print("Lo siento, este juego solo admite de 1 a 5 jugadores.")
 

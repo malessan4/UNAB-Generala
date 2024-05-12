@@ -3,6 +3,8 @@
 Este programa ejecuta el tan conocido juego de dados La Generala.
 Consiste en conseguir la  mejor combinación de dados para tener el puntaje más alto en una ronda que tiene  3 turnos para cada jugador, en el cual se puede elegir qué dados cambiar o no en cada ronda.
 
+Se puede jugar solo y probar tu suerte o hasta 5 jugadores.
+
 **Funcionalidad para cambiar los dados**
 
 Escribe los números de los dados (1er dado, 2do dado ..etc) a cambiar seguidos de espacio, o 'nada' para no cambiar nada.
